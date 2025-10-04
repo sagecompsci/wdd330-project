@@ -1,4 +1,4 @@
-const url = "https://pokeapi.co/api/v2/pokemon"
+const url = "/wdd330-project/https://pokeapi.co/api/v2/pokemon"
 
 export default class PokeData{
     async getData(){
@@ -16,7 +16,7 @@ export default class PokeData{
     }
 
     async getPokemon(pokemon){
-        const data = await fetch(pokemon.url)
+        const data = await fetch(`wdd330-project/${pokemon.url}`)
         return await data.json();
 
 
