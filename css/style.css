@@ -1,0 +1,70 @@
+:root {
+    --color_page: #FBF8EF;
+    --color_text: #1C0504;
+    --color_header: #C31D1E;
+    --color_accent: #E3AF67;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: var(--color_page);
+    color: var(--color_text);
+}
+
+h1 {
+    font-family: "Comic Sans MS", sans-serif;
+}
+
+p {
+    font-family: "Times New Roman", sans-serif;
+}
+
+header, footer {
+    background-color: var(--color_header);
+    color: var(--color_page);
+    text-align: center;
+    padding: 1em;
+}
+
+li {
+    list-style: none;
+}
+
+.poke-list > li {
+    width: 80%;
+    display: grid;
+    grid-template-areas:
+        "img name stats"
+        "img types stats";
+    margin: 1em auto;
+    border: 3px solid var(--color_header);
+
+    img {
+        grid-area: img;
+        margin: auto;
+    }
+
+    h3 {
+        grid-area: name;
+        margin: 1em;
+        text-align: center;
+    }
+
+    p {
+        grid-area: types;
+        text-align: center;
+    }
+
+    ul {
+        grid-area: stats;
+        column-count: 3;
+        border: 2px solid var(--color_accent);
+        margin: 1em;
+        padding: 1em;
+    }
+}
+
