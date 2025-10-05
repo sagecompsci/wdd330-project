@@ -4,8 +4,8 @@ export async function loadTemplate(path){
 }
 
 export async function loadHeaderFooter() {
-    const headerTemplate = await loadTemplate("/partials/header.html");
-    const footerTemplate = await loadTemplate("/partials/footer.html");
+    const headerTemplate = await loadTemplate("/wdd330-project/partials/header.html");
+    const footerTemplate = await loadTemplate("/wdd330-project/partials/footer.html");
 
     document.getElementById("header").innerHTML = headerTemplate;
     document.getElementById("footer").innerHTML = footerTemplate;
