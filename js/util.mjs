@@ -20,7 +20,7 @@ export function renderListWithTemplate(template, parentElement, list, position="
     parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
-export function search(list){
+export function filterName(list){
     const input = document.getElementById("search-bar").value.toLocaleLowerCase();
     if (!input){
         return list;
@@ -32,21 +32,47 @@ export function search(list){
 }
 
 export function filterType(list){
-    const button = document.getElementById("grass");
-    if (!button.checked){
-        return list
-    }
-
-    const input = button.value;
-    const newList =  list.filter((pokemon) => {
-        if (pokemon.types[0].type.name !== input){
-            if (pokemon.types[1]){
-                return pokemon.types[1].type.name === input;
-            }
+    const buttons = document.querySelectorAll("input[type=checkbox]");
+    let inputs = [];
+    buttons.forEach((button) => {
+        if (button.checked){
+            inputs.push(button.value);
         }
-        return pokemon.types[0].type.name === input;
-    });
+    })
+    if ( 0 <= inputs.length >= 3){
+        return list;
+    }
+    let newList = list;
+
+    inputs.forEach((input) => {
+        newList = newList.filter((pokemon) => {
+            if (pokemon.types[0].type.name !== input){
+                if (pokemon.types[1]){
+                    return pokemon.types[1].type.name === input;
+                }
+            }
+            return pokemon.types[0].type.name === input;
+        });
+    })
+
     console.log(newList);
     return newList
+}
+
+function checkboxTemplate(type){
+    return `<li>
+    <label><input type="checkbox" name="types" value="${type.name}" class="types" id="${type.name}">${type.name.toLocaleUpperCase()}</label>
+    </li>`
+
+}
+
+export async function displayCheckbox(){
+    const results = await fetch("https://pokeapi.co/api/v2/type/")
+    const data = await results.json();
+    const types = data.results;
+
+    const element = document.getElementById("types-list")
+
+    renderListWithTemplate(checkboxTemplate, element, types);
 
 }

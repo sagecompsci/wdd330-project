@@ -34,6 +34,22 @@ li {
     list-style: none;
 }
 
+#types-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+        margin: .75em;
+
+        input {
+            margin: .25em;
+        }
+    }
+
+}
+
+
 .poke-list > li {
     width: 80%;
     display: grid;
