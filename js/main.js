@@ -1,4 +1,4 @@
-import {loadHeaderFooter} from "./util.mjs";
+import {loadHeaderFooter, search, filterType} from "./util.mjs";
 import PokeData from "./PokeData.mjs";
 import PokeList from "./PokeList.mjs";
 
@@ -11,4 +11,12 @@ const list = new PokeList(dataSource, listElement);
 list.init();
 
 
-// console.log(dataSource.getData());
+const searchBar = document.getElementById("search-bar")
+searchBar.addEventListener("keyup", () => {
+    list.filterList(search, filterType);
+})
+
+const type = document.getElementById("grass");
+type.addEventListener("change", () => {
+    list.filterList(search, filterType);
+})

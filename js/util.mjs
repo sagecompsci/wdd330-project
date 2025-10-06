@@ -19,3 +19,34 @@ export function renderListWithTemplate(template, parentElement, list, position="
     }
     parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function search(list){
+    const input = document.getElementById("search-bar").value.toLocaleLowerCase();
+    if (!input){
+        return list;
+    }
+    const newList = list.filter((pokemon) => pokemon.name.includes(input))
+    console.log(newList)
+    return newList;
+
+}
+
+export function filterType(list){
+    const button = document.getElementById("grass");
+    if (!button.checked){
+        return list
+    }
+
+    const input = button.value;
+    const newList =  list.filter((pokemon) => {
+        if (pokemon.types[0].type.name !== input){
+            if (pokemon.types[1]){
+                return pokemon.types[1].type.name === input;
+            }
+        }
+        return pokemon.types[0].type.name === input;
+    });
+    console.log(newList);
+    return newList
+
+}

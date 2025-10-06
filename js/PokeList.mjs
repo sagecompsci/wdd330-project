@@ -33,15 +33,26 @@ export default class PokeList{
     constructor(dataSource, listElement) {
         this.dataSource = dataSource
         this.listElement = listElement;
+        this.list = [];
+        this.filtered = [];
     }
 
     async init(){
         const data = await this.dataSource.getData();
         // console.log(data);
-        const list = await this.dataSource.getDetails(data.results);
-        console.log(list);
+        this.list = await this.dataSource.getDetails(data.results);
+        console.log(this.list);
+        this.displayList(this.list);
+    }
+
+    displayList(list){
         renderListWithTemplate(cardTemplate, this.listElement, list);
     }
 
+    filterList(callback1, callback2){
+        this.listElement.innerHTML = "";
+        this.filtered = callback1(callback2(this.list));
+        this.displayList(this.filtered)
+    }
 
 }
