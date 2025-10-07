@@ -20,8 +20,11 @@ function cardTemplate(pokemon){
     const types = getTypes(pokemon);
     const stats = getStats(pokemon);
 
-    return `<li>
-    <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" loading="lazy">
+    return `<li class="card">
+    <div class="img-wrapper"><div class="img-card">
+        <div class="front"><img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" loading="lazy"></div>
+        <div class="back"><img src="${pokemon.sprites.back_default}" alt="${pokemon.name}" loading="lazy"></div>
+    </div></div>
     <h3>${pokemon.name.toLocaleUpperCase()}</h3>
     <p>${types.join("  ")}</p>
     <ul>${stats.join("")}</ul>

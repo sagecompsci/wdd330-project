@@ -28,6 +28,18 @@ header, footer {
     color: var(--color_page);
     text-align: center;
     padding: 1em;
+    display: flex;
+    justify-content: center;
+
+    img {
+        width: 50px;
+        padding: 0;
+        margin: 0 1em;
+        border: 3px solid black;
+        border-radius: 100px;
+
+        animation: spin 2s linear infinite;
+    }
 }
 
 li {
@@ -49,8 +61,13 @@ li {
 
 }
 
+.card:hover{
+    box-shadow: 10px 10px 5px 12px var(--color_header);
+    margin: 2em auto;
+}
 
-.poke-list > li {
+.card {
+    transition: all .5s;
     width: 80%;
     display: grid;
     grid-template-areas:
@@ -58,6 +75,7 @@ li {
         "img types stats";
     margin: 1em auto;
     border: 3px solid var(--color_header);
+
 
     img {
         grid-area: img;
@@ -82,5 +100,35 @@ li {
         margin: 1em;
         padding: 1em;
     }
+
+    .img-wrapper {
+        perspective: 1000px;
+
+        .img-card {
+            position: relative;
+            transform-style: preserve-3d;
+
+            .front, .back {
+                position: absolute;
+                backface-visibility: hidden;
+            }
+        }
+    }
+
+    .img-card:hover, .back{
+        transform: rotateY(180deg)
+    }
+
 }
 
+@keyframes spin {
+    0% {
+        transform: rotate(0);
+    }
+    60% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
