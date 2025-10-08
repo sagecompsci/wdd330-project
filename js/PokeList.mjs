@@ -19,33 +19,46 @@ function getStats(pokemon){
 function cardTemplate(pokemon){
     const types = getTypes(pokemon);
     const stats = getStats(pokemon);
+    const object = encodeURIComponent(JSON.stringify(pokemon))
+    const storage = JSON.parse(localStorage.getItem("fav")) || [];
+    let id = "outline";
+    if (storage.includes(object)){
+        id = "filled";
+    }
+
 
     return `<li class="card">
+    <img class="fav" data-id="${id}" data-object="${object}" src="images/star_${id}.png" alt="fav button">
     <div class="img-wrapper"><div class="img-card">
         <div class="front"><img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" loading="lazy"></div>
         <div class="back"><img src="${pokemon.sprites.back_default}" alt="${pokemon.name}" loading="lazy"></div>
     </div></div>
-    <h3>${pokemon.name.toLocaleUpperCase()}</h3>
-    <p>${types.join("  ")}</p>
+    <div class="name">
+        <h3>${pokemon.name.toLocaleUpperCase()}</h3>
+        <p>${types.join("  ")}</p>
+    </div>
     <ul>${stats.join("")}</ul>
     </li>
     `
 }
 
 export default class PokeList{
-    constructor(dataSource, listElement) {
+    constructor(dataSource, listElement, html=true) {
         this.dataSource = dataSource
         this.listElement = listElement;
         this.list = [];
         this.filtered = [];
+        this.html = html;
     }
 
     async init(){
-        const data = await this.dataSource.getData();
-        // console.log(data);
-        this.list = await this.dataSource.getDetails(data.results);
-        console.log(this.list);
-        this.displayList(this.list);
+        if (this.html){
+            const data = await this.dataSource.getData();
+            this.list = await this.dataSource.getDetails(data.results);
+            this.displayList(this.list);
+        } else {
+            this.displayList(this.dataSource);
+        }
     }
 
     displayList(list){

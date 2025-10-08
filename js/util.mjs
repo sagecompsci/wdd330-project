@@ -5,10 +5,10 @@ export async function loadTemplate(path){
 
 export async function loadHeaderFooter() {
     //local host and github require different urls, I'm commenting them out so I can easily switch between them
-    // const headerTemplate = await loadTemplate("/wdd330-project/partials/header.html");
-    // const footerTemplate = await loadTemplate("/wdd330-project/partials/footer.html");
-    const headerTemplate = await loadTemplate("/partials/header.html");
-    const footerTemplate = await loadTemplate("/partials/footer.html");
+    const headerTemplate = await loadTemplate("/wdd330-project/partials/header.html");
+    const footerTemplate = await loadTemplate("/wdd330-project/partials/footer.html");
+    // const headerTemplate = await loadTemplate("/partials/header.html");
+    // const footerTemplate = await loadTemplate("/partials/footer.html");
 
     document.getElementById("header").innerHTML = headerTemplate;
     document.getElementById("footer").innerHTML = footerTemplate;
@@ -31,7 +31,6 @@ export function filterName(list){
     const newList = list.filter((pokemon) => pokemon.name.includes(input))
     console.log(newList)
     return newList;
-
 }
 
 export function filterType(list){
@@ -78,4 +77,66 @@ export async function displayCheckbox(){
 
     renderListWithTemplate(checkboxTemplate, element, types);
 
+}
+
+export function displayPageNumbers(){
+    const pages = document.getElementById("pages");
+    for (let i = 0; i < 5; i++){
+        const li = document.createElement("li");
+        li.classList.add("page-number");
+        li.dataset.id = `${i}`;
+        li.textContent = `${i + 1}`;
+        pages.appendChild(li);
+    }
+    if (!localStorage.getItem("page")){
+        localStorage.setItem("page", "0");
+    }
+}
+
+function removeClass(className){
+    const element = document.querySelector(`.${className}`);
+    if (element){
+        element.classList.remove(`${className}`);
+    }
+}
+
+export function updatePage(){
+    document.querySelector(".poke-list").innerHTML = ``;
+    const pages = document.querySelectorAll(".page-number");
+    removeClass("active-page");
+    const id = localStorage.getItem("page");
+    pages.forEach((number) => {
+        if (number.dataset.id === id){
+            number.classList.add("active-page");
+        }
+    })
+    return `https://pokeapi.co/api/v2/pokemon?offset=${20 * id}&limit=20`
+
+
+}
+
+export function changeFav(item, operation){
+    let fav = JSON.parse(localStorage.getItem("fav")) || [];
+    if (operation === "add"){
+        // console.log(fav);
+        // console.log(item);
+        fav.push(item);
+    }
+    if (operation === "remove"){
+        fav = fav.filter((pokemon) => pokemon !== item)
+    }
+
+    localStorage.setItem("fav", JSON.stringify(fav));
+}
+
+export function changeTheme(){
+    const theme = localStorage.getItem("theme");
+    const darkMode = document.getElementById("dark-mode");
+    if (theme === "dark"){
+        document.body.classList.add("dark-mode");
+        darkMode.checked = true;
+
+    }else{
+        document.body.classList.remove("dark-mode");
+    }
 }

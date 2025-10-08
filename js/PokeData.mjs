@@ -1,9 +1,14 @@
-const url = "https://pokeapi.co/api/v2/pokemon"
 
 export default class PokeData{
+    constructor(url) {
+        this.url = url;
+    }
+
     async getData(){
-        const response = await fetch(url);
-        return await response.json();
+        const response = await fetch(this.url);
+        const data = await response.json();
+        console.log(data);
+        return data;
     }
 
     async getDetails(data){
